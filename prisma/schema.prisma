@@ -30,6 +30,14 @@ model Page {
   content String
   slug String @unique
   edits Edit[]
+  archived ArchivedPage[]
+}
+
+model ArchivedPage {
+  archivedPageId Int @id @default(autoincrement())
+  pageId Int
+  page Page @relation(references: [pageId], fields: [pageId])
+  content String
 }
 
 model Edit {
