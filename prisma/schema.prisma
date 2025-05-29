@@ -23,21 +23,27 @@ model User {
   isAdmin Boolean @default(false)
   createdAt DateTime @default(now())
   edits Edit[]
+  archivedPages ArchivedPage[]
 }
 
 model Page {
   pageId Int @id @default(autoincrement())
   content String
+  title String
   slug String @unique
   edits Edit[]
   archived ArchivedPage[]
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model ArchivedPage {
   archivedPageId Int @id @default(autoincrement())
   pageId Int
   page Page @relation(references: [pageId], fields: [pageId])
+  userId Int
+  archivedBy User @relation(references: [userId],fields: [userId])
   content String
+  archivedAt DateTime @default(now())
 }
 
 model Edit {
